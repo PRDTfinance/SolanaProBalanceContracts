@@ -416,7 +416,7 @@ pub struct InitAta<'info> {
 
     pub token_mint: Account<'info, Mint>,
 
-    #[account(mut, address=master.admin)]
+    #[account(mut, address = master.admin)]
     pub user: Signer<'info>,
 
     pub token_program: Program<'info, Token>,
@@ -436,7 +436,7 @@ pub struct SetOperator<'info> {
     )]
     pub master: Account<'info, Master>,
 
-    #[account(mut, address=master.admin)]
+    #[account(mut, address = master.admin)]
     pub admin: Signer<'info>,
 
     pub new_operator: SystemAccount<'info>,
@@ -454,7 +454,7 @@ pub struct SetAdmin<'info> {
     )]
     pub master: Account<'info, Master>,
 
-    #[account(mut, address=master.admin)]
+    #[account(mut, address = master.admin)]
     pub admin: Signer<'info>,
 
     pub new_admin: SystemAccount<'info>,
@@ -491,7 +491,7 @@ pub struct DepositToken<'info> {
 
     #[account(
         mut,
-        address=master.token_account.expect("token account has not been initialized"),
+        address = master.token_account.expect("token account has not been initialized"),
         associated_token::mint = token_mint,
         associated_token::authority = master,
         associated_token::token_program = token_program,
@@ -501,12 +501,10 @@ pub struct DepositToken<'info> {
     #[account(
         mut,
         associated_token::mint = token_mint,
-        associated_token::authority = owner,
+        associated_token::authority = user,
         associated_token::token_program = token_program,
     )]
     pub from: Account<'info, TokenAccount>,
-
-    pub owner: SystemAccount<'info>,
 
     #[account(mut)]
     pub user: Signer<'info>,
@@ -529,7 +527,7 @@ pub struct SendWithdraw<'info> {
     )]
     pub master: Account<'info, Master>,
 
-    #[account(mut, address=master.operator)]
+    #[account(mut, address = master.operator)]
     pub operator: Signer<'info>,
 
     #[account(mut)]
@@ -549,7 +547,7 @@ pub struct Withdraw<'info> {
     )]
     pub master: Account<'info, Master>,
 
-    #[account(mut, address=master.admin)]
+    #[account(mut, address = master.admin)]
     pub admin: Signer<'info>,
 
     pub system_program: Program<'info, System>,
@@ -567,14 +565,14 @@ pub struct WithdrawToken<'info> {
 
     #[account(
         mut,
-        address=master.token_account.expect("token account has not been initialized"),
+        address = master.token_account.expect("token account has not been initialized"),
         associated_token::mint = token_mint,
         associated_token::authority = master,
         associated_token::token_program = token_program,
     )]
     pub master_ata: Account<'info, TokenAccount>,
 
-    #[account(mut, address=master.admin)]
+    #[account(mut, address = master.admin)]
     pub admin: Signer<'info>,
 
     #[account(
@@ -604,14 +602,14 @@ pub struct SendWithdrawToken<'info> {
 
     #[account(
         mut,
-        address=master.token_account.expect("token account has not been initialized"),
+        address = master.token_account.expect("token account has not been initialized"),
         associated_token::mint = token_mint,
         associated_token::authority = master,
         associated_token::token_program = token_program,
     )]
     pub master_ata: Account<'info, TokenAccount>,
 
-    #[account(mut, address=master.operator)]
+    #[account(mut, address = master.operator)]
     pub operator: Signer<'info>,
 
     #[account(
