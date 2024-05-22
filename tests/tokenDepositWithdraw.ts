@@ -99,7 +99,7 @@ describe("tokenActions", () => {
       })
       .rpc();
 
-    //Initialise ATA
+    // Initialise ATA
     await getOrCreateAssociatedTokenAccount(
       provider.connection,
       PaYeR,
@@ -172,6 +172,7 @@ describe("tokenActions", () => {
         tokenProgram: TOKEN_PROGRAM_ID,
         systemProgram: anchor.web3.SystemProgram.programId,
         from: person1ATA,
+        owner: user.publicKey,
         masterAta: masterAta,
         tokenMint: mintSC,
         user: anchor.getProvider().publicKey,
@@ -198,6 +199,7 @@ describe("tokenActions", () => {
         tokenProgram: TOKEN_PROGRAM_ID,
         systemProgram: anchor.web3.SystemProgram.programId,
         from: user1ATA,
+        owner: user1.publicKey,
         masterAta: masterAta,
         tokenMint: mintSC,
         user: user1.publicKey,
@@ -252,6 +254,7 @@ describe("tokenActions", () => {
         masterAta: masterAta,
         operator: anchor.getProvider().publicKey,
         receiverAta: user1ATA,
+        receiver: user1.publicKey,
         tokenMint: mintSC,
         tokenProgram: TOKEN_PROGRAM_ID,
         systemProgram: anchor.web3.SystemProgram.programId,

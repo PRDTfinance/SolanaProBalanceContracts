@@ -159,14 +159,8 @@ mod pro_balance {
             Errors::NotEnoughBalance
         );
 
-        invoke(
-            &transfer(&master.key(), &admin.key(), amount),
-            &[
-                master.to_account_info(),
-                admin.to_account_info(),
-                ctx.accounts.system_program.to_account_info(),
-            ],
-        )?;
+        master.sub_lamports(amount)?;
+        admin.add_lamports(amount)?;
 
         master.balance = master
             .balance
@@ -244,14 +238,8 @@ mod pro_balance {
             Errors::NotEnoughBalance
         );
 
-        invoke(
-            &transfer(&master.key(), &receiver.key(), amount),
-            &[
-                master.to_account_info(),
-                receiver.to_account_info(),
-                ctx.accounts.system_program.to_account_info(),
-            ],
-        )?;
+        master.sub_lamports(amount)?;
+        receiver.add_lamports(amount)?;
 
         master.balance = master
             .balance
@@ -510,8 +498,15 @@ pub struct DepositToken<'info> {
     )]
     pub master_ata: Account<'info, TokenAccount>,
 
-    #[account(mut)]
+    #[account(
+        mut,
+        associated_token::mint = token_mint,
+        associated_token::authority = owner,
+        associated_token::token_program = token_program,
+    )]
     pub from: Account<'info, TokenAccount>,
+
+    pub owner: SystemAccount<'info>,
 
     #[account(mut)]
     pub user: Signer<'info>,
@@ -537,6 +532,7 @@ pub struct SendWithdraw<'info> {
     #[account(mut, address=master.operator)]
     pub operator: Signer<'info>,
 
+    #[account(mut)]
     pub receiver: SystemAccount<'info>,
 
     pub system_program: Program<'info, System>,
